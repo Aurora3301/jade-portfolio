@@ -1,0 +1,74 @@
+{
+  "eggy": [
+    "eggy-0.webp",
+    "eggy-1.webp",
+    "eggy-2.webp",
+    "eggy-3.webp",
+    "eggy-4.webp",
+    "eggy-5.webp",
+    "eggy-6.webp"
+  ],
+  "daynight": [
+    "daynight-0.webp",
+    "daynight-1.webp",
+    "daynight-2.webp",
+    "daynight-3.webp",
+    "daynight-4.webp",
+    "daynight-5.webp",
+    "daynight-6.webp",
+    "daynight-7.webp",
+    "daynight-8.webp",
+    "daynight-9.webp",
+    "daynight-10.webp",
+    "daynight-11.webp",
+    "daynight-12.webp",
+    "daynight-13.webp",
+    "daynight-14.webp",
+    "daynight-15.webp",
+    "daynight-16.webp",
+    "daynight-17.webp",
+    "daynight-18.webp"
+  ],
+  "gutter": [
+    "gutter-0.webp",
+    "gutter-1.webp",
+    "gutter-2.webp",
+    "gutter-3.webp",
+    "gutter-4.mp4",
+    "gutter-5.webp",
+    "gutter-6.mp4",
+    "gutter-7.mp4",
+    "gutter-8.webp",
+    "gutter-9.webp"
+  ],
+  "glimmera": [
+    "glimmera-0.webp",
+    "glimmera-1.webp",
+    "glimmera-2.webp",
+    "glimmera-3.mp4",
+    "glimmera-4.webp",
+    "glimmera-5.webp",
+    "glimmera-6.webp",
+    "glimmera-7.webp",
+    "glimmera-8.webp",
+    "glimmera-9.webp"
+  ],
+  "marine": [
+    "marine-0.webp",
+    "marine-1.webp",
+    "marine-2.webp",
+    "marine-3.webp"
+  ],
+  "landing": [
+    "landing-0.mp4",
+    "landing-1.mp4",
+    "landing-2.mp4",
+    "landing-3.mp4",
+    "landing-4.mp4",
+    "landing-5.mp4"
+  ],
+  "logo": [
+    "logo-0.webp",
+    "logo-1.webp"
+  ]
+}
