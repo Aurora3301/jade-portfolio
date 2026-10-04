@@ -1,32 +1,31 @@
 {
   "name": "jade-portfolio",
-  "version": "1.0.0",
   "private": true,
+  "version": "1.1.0",
   "type": "module",
-  "engines": {
-    "node": ">=22.12.0"
-  },
   "scripts": {
-    "setup": "npm ci",
-    "dev": "vite --host 127.0.0.1",
+    "dev": "vite",
     "build": "vue-tsc --noEmit && vite build",
+    "test": "vitest run && playwright test",
+    "test:watch": "vitest",
     "preview": "vite preview --host 127.0.0.1",
-    "start": "npm run build && npm run preview",
-    "test": "playwright test",
-    "media": "node scripts/prepare-media.mjs"
+    "test:unit": "vitest run"
   },
   "dependencies": {
-    "@fontsource/lexend": "^5.2.0",
-    "vue": "^3.5.0",
+    "@pinia/colada": "^0.16.0",
+    "pinia": "^3.0.1",
+    "vue": "^3.5.13",
     "vue-router": "^4.5.0"
   },
   "devDependencies": {
-    "@playwright/test": "^1.58.0",
-    "@types/node": "^22.0.0",
-    "@vitejs/plugin-vue": "^6.0.0",
-    "sharp": "^0.35.4",
-    "typescript": "^5.9.0",
-    "vite": "^7.0.0",
-    "vue-tsc": "^3.0.0"
+    "@types/node": "^22.10.1",
+    "@vitejs/plugin-vue": "^5.2.1",
+    "@vue/test-utils": "^2.4.6",
+    "jsdom": "^25.0.1",
+    "typescript": "^5.7.2",
+    "vite": "^6.0.5",
+    "vitest": "^2.1.8",
+    "vue-tsc": "^2.2.0",
+    "@playwright/test": "^1.58.0"
   }
 }
