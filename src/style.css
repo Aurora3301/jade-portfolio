@@ -110,7 +110,7 @@ main.story {
 }
 .project-hero__context {
   max-width: none;
-  padding-top: 12px;
+  padding-top: 0;
   color: #754540;
   text-align: right;
   font-size: clamp(15px, 1.35vw, 21px);
