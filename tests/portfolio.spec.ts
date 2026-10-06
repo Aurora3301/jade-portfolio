@@ -28,6 +28,17 @@ test('branding collection and transparent editorial layout', async ({ page }, te
   await expect(page.locator('.project-hero__summary')).toHaveCSS('color', 'rgb(80, 49, 36)')
   await expect(page.locator('.project-hero__media')).toHaveCSS('background-color', 'rgba(0, 0, 0, 0)')
   await expect(page.locator('.project-hero__media img')).toHaveCSS('object-fit', 'contain')
+  if (testInfo.project.name === 'desktop') {
+    for (const slug of ['eggy', 'daynight', 'gutter', 'glimmera', 'unseen-marine']) {
+      await page.goto(`./#/projects/${slug}`)
+      const tops = await page.evaluate(() => [
+        document.querySelector('.project-hero__summary')!.getBoundingClientRect().top,
+        document.querySelector('.project-hero__context')!.getBoundingClientRect().top,
+      ])
+      expect(Math.abs(tops[0] - tops[1]), `${slug} metadata alignment`).toBeLessThan(1)
+    }
+    await page.goto('./#/projects/eggy')
+  }
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true)
   await page.goto('./#/project/gutter')
   await page.reload()
