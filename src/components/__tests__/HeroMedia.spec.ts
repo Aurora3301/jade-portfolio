@@ -1,4 +1,4 @@
-import { mount } from '@vue/test-utils'
+import { flushPromises, mount } from '@vue/test-utils'
 import { vi } from 'vitest'
 import HeroMedia from '../HeroMedia.vue'
 
@@ -18,13 +18,14 @@ describe('HeroMedia', () => {
   it('advances only when a clip ends and repeats the playlist after the last clip', async () => {
     vi.useFakeTimers()
     const playlist = ['first', 'second', 'third'].map(id => ({ id, type: 'video' as const, src: `/${id}.mp4` }))
-    const wrapper = mount(HeroMedia, { props: { playlist } })
+    const wrapper = mount(HeroMedia, { props: { playlist }, attachTo: document.body })
     try {
-      await vi.advanceTimersByTimeAsync(24000)
-      expect(wrapper.get('video').attributes('src')).toBe('/first.mp4')
+      const active = () => wrapper.get('video.is-on')
+      expect(active().attributes('src')).toBe('/first.mp4')
       for (const expected of ['second', 'third', 'first']) {
-        await wrapper.get('video').trigger('ended')
-        expect(wrapper.get('video').attributes('src')).toBe(`/${expected}.mp4`)
+        await active().trigger('ended')
+        await flushPromises()
+        expect(active().attributes('src')).toBe(`/${expected}.mp4`)
       }
     } finally { wrapper.unmount(); vi.useRealTimers() }
   })

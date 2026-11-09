@@ -1,10 +1,14 @@
 <template>
-  <section v-if="block.type === 'text' && block.title" data-block="text" class="block-copy">
+  <details v-if="block.type === 'text' && block.disclosure" data-block="text" class="block-copy">
+    <summary>{{ block.title }}</summary>
+    <p v-if="block.content" class="block-text">{{ block.content }}</p>
+  </details>
+  <section v-else-if="block.type === 'text' && block.title" data-block="text" class="block-copy">
     <h2>{{ block.title }}</h2>
     <p v-if="block.content" class="block-text">{{ block.content }}</p>
   </section>
   <p v-else-if="block.type === 'text'" data-block="text" class="block-text">{{ block.content }}</p>
-  <figure v-else-if="block.type === 'image'" data-block="image" class="block-image">
+  <figure v-else-if="block.type === 'image'" data-block="image" class="block-image" :class="{ 'wordmark-band': block.id === 'gutter-3.webp' }">
     <img :src="block.src" :alt="block.alt || ''" />
     <figcaption v-if="editing && !block.alt" class="block-warning">Add alt text before publishing.</figcaption>
   </figure>

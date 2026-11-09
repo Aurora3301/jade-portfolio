@@ -17,6 +17,7 @@ export interface LayoutBlock {
   assetIds?: string[]
   items?: Array<{ src: string; alt: string }>
   layout?: GridLayout
+  disclosure?: boolean
 }
 
 export interface ProjectSummary {

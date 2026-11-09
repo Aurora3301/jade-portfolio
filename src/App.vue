@@ -7,9 +7,7 @@
     </div>
     <nav v-if="isBranding" aria-label="Primary">
       <RouterLink to="/about">about me</RouterLink>
-      <a href="https://aurora3301.github.io/jade-portfolio/#/awards">awards</a>
-      <a href="https://aurora3301.github.io/jade-portfolio/#/blogs">blogs</a>
-      <a href="mailto:lxmngch.studio@gmail.com">contact</a>
+      <RouterLink to="/contact">contact</RouterLink>
     </nav>
     <nav v-else aria-label="Primary">
       <RouterLink to="/about">About</RouterLink>

@@ -1,9 +1,12 @@
 <script setup lang="ts">
 import { computed } from 'vue'
-import { projects, coverFor } from '../projects'
+import { visibleProjects, coverFor } from '../projects'
 import { media, assets } from '../media'
 const props = defineProps<{ category: string }>()
-const selected = computed(() => props.category === 'All projects' ? projects : projects.filter(p => p.category === props.category))
+const selected = computed(() => {
+  const list = visibleProjects()
+  return props.category === 'All projects' ? list : list.filter(p => p.category === props.category)
+})
 const printProjects = () => window.print()
 </script>
 <template>

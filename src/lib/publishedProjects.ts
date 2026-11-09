@@ -3,7 +3,7 @@ const assets = manifest as Record<string, string[]>
 export interface ProjectData {
   slug: string; title: string; category: string; hook: string; meta: string; credit: string;
   group?: string; cover?: string; sections: { title: string; text: string }[];
-  details?: { title: string; text: string; disclosure?: boolean }[]; pending?: boolean
+  details?: { title: string; text: string; disclosure?: boolean }[]; pending?: boolean; hidden?: boolean
 }
 export const projects: ProjectData[] = [
   {
@@ -71,8 +71,8 @@ export const projects: ProjectData[] = [
       { title: 'Details · The Menu Case', text: 'The menu was designed as more than a guide to the meal. It is made from recycled material, it contains the dinnerware within its structure, turning the act of opening the menu into the first moment of discovery. As the menu reveals what is hidden inside, it introduces the central idea of Unseen Marine: look beyond what is superficially visible.' },
     ],
   },
-  { slug: 'from-the-ground', title: 'From the Ground', category: 'Entertainment Concept', hook: 'My 22nd Birthday Dinner', meta: '', credit: '', sections: [], pending: true },
+  { slug: 'from-the-ground', title: 'From the Ground', category: 'Entertainment Concept', hook: 'My 22nd Birthday Dinner', meta: '', credit: '', sections: [], pending: true, hidden: true },
 ]
-export const imagesFor = (p: ProjectData) => (assets[p.group || ''] || []).filter(file => file.endsWith('.webp'))
+export const imagesFor = (p: ProjectData) => (assets[p.group || ''] || []).filter(file => /\.(webp|gif)$/.test(file))
 export const videosFor = (p: ProjectData) => (assets[p.group || ''] || []).filter(file => file.endsWith('.mp4'))
 export const coverFor = (p: ProjectData) => p.cover || imagesFor(p)[0]

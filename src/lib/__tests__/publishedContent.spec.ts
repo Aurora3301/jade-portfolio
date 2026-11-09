@@ -18,8 +18,9 @@ describe('published media restoration', () => {
     expect(publishedHome.blocks.map(b => b.src!.split('/').pop())).toEqual(manifest.landing)
     expect(publishedHome.blocks.every(b => b.poster?.endsWith('home-poster.webp'))).toBe(true)
   })
-  it('has every referenced asset on disk and retains the pending project', () => {
+  it('has every referenced asset on disk and keeps From the Ground unpublished', () => {
     for (const file of [...Object.values(manifest).flat(), 'home-poster.webp']) expect(existsSync(`public/media/${file}`)).toBe(true)
-    expect(publishedProjects.find(p => p.slug === 'from-the-ground')?.pending).toBe(true)
+    expect(projects.find(p => p.slug === 'from-the-ground')?.hidden).toBe(true)
+    expect(publishedProjects.find(p => p.slug === 'from-the-ground')).toBeUndefined()
   })
 })
