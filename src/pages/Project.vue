@@ -4,8 +4,16 @@ import { useRoute } from 'vue-router'
 import { projects, imagesFor, videosFor, coverFor } from '../projects'
 import { media, assets } from '../media'
 const route = useRoute()
-const project = computed(() => projects.find(p => p.slug === route.params.slug))
-const gallery = computed(() => project.value ? imagesFor(project.value).filter(x => x !== coverFor(project.value!)) : [])
+const project = computed(() => {
+  const found = projects.find(p => p.slug === route.params.slug)
+  return found?.hidden ? undefined : found
+})
+const gallery = computed(() => {
+  if (!project.value) return []
+  const exclude = new Set([coverFor(project.value), ...placedMedia(project.value.slug)])
+  return imagesFor(project.value).filter(file => !exclude.has(file))
+})
+const placedMedia = (slug: string) => slug === 'gutter' ? ['gutter-2.webp', 'gutter-3.webp'] : []
 </script>
 <template>
   <main v-if="project" id="main" tabindex="-1" class="project page">
@@ -15,8 +23,23 @@ const gallery = computed(() => project.value ? imagesFor(project.value).filter(x
       <img class="project-hero" :src="media(coverFor(project)!)" :alt="`${project.title} — main project visual`">
       <div class="story-grid"><section v-for="section in project.sections" :key="section.title"><h2>{{ section.title }}</h2><p>{{ section.text }}</p></section></div>
       <div class="project-videos"><video v-for="(file, i) in videosFor(project)" :key="file" controls playsinline preload="none" :poster="media(coverFor(project)!)" :aria-label="`${project.title} film ${i + 1}`"><source :src="media(file)" type="video/mp4">Your browser cannot play this video.</video></div>
-      <div class="gallery"><img v-for="(file, i) in gallery.slice(0, 2)" :key="file" :src="media(file)" :alt="`${project.title} — design study ${i + 1}`" loading="lazy"></div>
-      <div class="project-details"><template v-for="detail in project.details" :key="detail.title"><details v-if="detail.disclosure"><summary>{{ detail.title }}</summary><p>{{ detail.text }}</p></details><section v-else><h2>{{ detail.title }}</h2><p v-if="detail.text">{{ detail.text }}</p></section></template></div>
+      <div class="gallery gallery--pair"><img v-for="(file, i) in gallery.slice(0, 2)" :key="file" :src="media(file)" :alt="`${project.title} — design study ${i + 1}`" loading="lazy"></div>
+      <div class="project-details">
+        <template v-for="detail in project.details" :key="detail.title">
+          <details v-if="detail.disclosure">
+            <summary>{{ detail.title }}</summary>
+            <p>{{ detail.text }}</p>
+            <img v-if="project.slug === 'gutter' && detail.title === 'The Interactive System'" class="system-map" :src="media('gutter-2.webp')" alt="Gutter interactive system map">
+          </details>
+          <section v-else>
+            <h2>{{ detail.title }}</h2>
+            <p v-if="detail.text">{{ detail.text }}</p>
+          </section>
+        </template>
+      </div>
+      <figure v-if="project.slug === 'gutter'" class="wordmark-band">
+        <img :src="media('gutter-3.webp')" alt="gutter wordmark — your gut sent you a message">
+      </figure>
       <div class="gallery"><img v-for="(file, i) in gallery.slice(2)" :key="file" :src="media(file)" :alt="`${project.title} — design study ${i + 3}`" loading="lazy"></div>
     </template>
     <RouterLink class="browse" to="/projects">Browse more projects / all projects ↗</RouterLink>

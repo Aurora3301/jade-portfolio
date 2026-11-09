@@ -15,18 +15,26 @@ const groups = {
   landing: 'landing page animation',
   logo: 'logo',
 }
+const skip = new Set([
+  'gutter identity.mp4',
+  'gutter logo.mp4',
+])
 const manifest = {}
 for (const [group, folder] of Object.entries(groups)) {
   manifest[group] = []
   const files = (await fs.readdir(path.join(source, folder), { recursive: true })).sort()
   for (const file of files) {
     if (!/\.(png|jpg|jpeg|gif|mp4|mov)$/i.test(file)) continue
+    if (skip.has(path.basename(file))) continue
     const input = path.join(source, folder, file)
     const video = /\.(mp4|mov)$/i.test(file)
-    const name = `${group}-${manifest[group].length}.${video ? 'mp4' : 'webp'}`
+    const gif = /\.gif$/i.test(file)
+    const name = `${group}-${manifest[group].length}.${video ? 'mp4' : gif ? 'gif' : 'webp'}`
     const output = path.join(out, name)
     if (video) {
       execFileSync('ffmpeg', ['-y', '-v', 'error', '-i', input, '-vf', 'scale=1280:720:force_original_aspect_ratio=decrease:force_divisible_by=2', '-c:v', 'libx264', '-preset', 'fast', '-crf', '26', '-pix_fmt', 'yuv420p', '-movflags', '+faststart', ...(group === 'landing' ? ['-an'] : ['-c:a', 'aac', '-b:a', '128k']), output])
+    } else if (gif) {
+      await fs.copyFile(input, output)
     } else {
       await sharp(input).rotate().resize({ width: 1920, height: 1920, fit: 'inside', withoutEnlargement: true }).webp({ quality: 83 }).toFile(output)
     }

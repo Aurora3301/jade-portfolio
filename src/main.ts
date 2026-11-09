@@ -5,6 +5,8 @@ import Home from './pages/Home.vue'
 import Collection from './pages/Collection.vue'
 import Project from './pages/Project.vue'
 import Holding from './pages/Holding.vue'
+import About from './pages/About.vue'
+import Contact from './pages/Contact.vue'
 import '@fontsource/lexend/500.css'
 import './style.css'
 const router = createRouter({
@@ -15,7 +17,9 @@ const router = createRouter({
     { path: '/entertainment', component: Collection, props: { category: 'Entertainment Concept' } },
     { path: '/projects', component: Collection, props: { category: 'All projects' } },
     { path: '/project/:slug', component: Project },
-    ...['graphic-design', 'about', 'awards', 'blogs'].map(path => ({ path: `/${path}`, component: Holding })),
+    { path: '/about', component: About },
+    { path: '/contact', component: Contact },
+    ...['graphic-design'].map(path => ({ path: `/${path}`, component: Holding })),
     { path: '/:pathMatch(.*)*', component: Holding },
   ],
   scrollBehavior: () => ({ top: 0 }),
